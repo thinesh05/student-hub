@@ -1,0 +1,27 @@
+<body>  
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Student Id</th>
+                <th>Fullname</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for( student of students; track student.id){
+                <tr>
+                    <td>{{student.student_id}}</td>
+                    <td>{{student.fullname}}</td>
+                    <td [ngSwitch]="student.gender">
+                        <ng-container *ngSwitchCase="'M'">Male</ng-container>
+                        <ng-container *ngSwitchCase="'F'">Female</ng-container>
+                    </td>                
+                    <td>{{student.email}}</td>
+                    <td>Buttons</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
