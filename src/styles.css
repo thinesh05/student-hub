@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+.action-icons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.action-icons svg {
+    cursor: pointer;
+}
