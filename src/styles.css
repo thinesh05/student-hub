@@ -1,3 +1,6 @@
+body {
+    margin: 10px;
+}
 .action-icons {
     display: flex;
     align-items: center;

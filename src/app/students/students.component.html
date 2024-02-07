@@ -1,48 +1,79 @@
 <body>  
     <div class="table-responsive">
-        <table class="table table-borderless table-striped align-middle">
-            <thead>
-                <tr>
-                    <th>Student Id</th>
-                    <th>Fullname</th>
-                    <th>Gender</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for( student of students; track student.id){
-                    <tr id="{{student.id}}">
-                        <td>{{student.student_id}}</td>
-                        <td>{{student.fullname}}</td>
-                        <td [ngSwitch]="student.gender">
-                            <ng-container *ngSwitchCase="'M'">Male</ng-container>
-                            <ng-container *ngSwitchCase="'F'">Female</ng-container>
-                        </td>                
-                        <td>{{student.email}}</td>
-                        <td>
-                            <div class="action-icons">
-                                <div class="view-details" (click)="showDetails()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#00A36C" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-                                    </svg>
-                                </div>
-                                <div class="edit-details" (click)="editDetails()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0096FF" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-                                    </svg>
-                                </div>
-                                <div class="delete-student" (click)="deleteStudent()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FF0000" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <ng-container *ngIf="students else apiError">
+            <ng-container *ngIf="students.length > 0; else noData">
+                <table class="table table-borderless table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>Fullname</th>
+                            <th>Gender</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(student of students; track student.id){
+                            <tr>
+                                <td>{{student.fullname}}</td>
+                                <td [ngSwitch]="student.gender">
+                                    <ng-container *ngSwitchCase="'M'">Male</ng-container>
+                                    <ng-container *ngSwitchCase="'F'">Female</ng-container>
+                                </td>                
+                                <td>{{student.email}}</td>
+                                <td>
+                                    <div class="action-icons">
+                                        <div class="view-details" (click)="showDetails(student.id)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#00A36C" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="edit-details" routerLink="edit/{{ student.id }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0096FF" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="delete-student" (click)="deleteStudent(student.id)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FF0000" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </ng-container>
+        </ng-container>
+        <ng-template #apiError>
+            <div class="alert alert-danger" role="alert">
+                Please check API connection...
+            </div>
+        </ng-template>
+        <ng-template #noData>
+            <div class="alert alert-warning" role="alert">
+                No data available. Please insert data.
+            </div>
+        </ng-template>
     </div>
+    <form (ngSubmit)="insertStudent()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" [(ngModel)]="student.fullname">
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select name="gender" class="form-control" [(ngModel)]="student.gender">
+                <option value="" disabled selected>--Select Gender--</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" name="email" class="form-control" [(ngModel)]="student.email">
+        </div>
+        <button class="btn btn-dark mt-4">Submit</button>
+    </form>
 </body>
