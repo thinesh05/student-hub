@@ -1,1 +1,19 @@
-<p>students-edit works!</p>
+<form (ngSubmit)="updateStudent()">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" name="name" class="form-control" [(ngModel)]="student.fullname">
+    </div>
+    <div class="form-group">
+        <label for="gender">Gender</label>
+        <select name="gender" class="form-control" [(ngModel)]="student.gender">
+            <option value="" disabled selected>--Select Gender--</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" name="email" class="form-control" [(ngModel)]="student.email">
+    </div>
+    <button class="btn btn-dark mt-4">Update</button>
+</form>

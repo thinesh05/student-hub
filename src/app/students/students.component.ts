@@ -22,11 +22,6 @@ export class StudentsComponent implements OnInit {
     this.fetchData();
   }
 
-  // Action buttons
-  showDetails(studentId: number): void {
-    alert(`Showing details for student with ID ${studentId}`);
-  }
-
   fetchData(){
     this.httpClient
     .get('http://127.0.0.1:8000/api/student')
@@ -53,5 +48,15 @@ export class StudentsComponent implements OnInit {
         location.reload();
       }
     })
+  }
+
+  showDetails(studentId: number): void {
+    this.httpClient
+    .get(`http://127.0.0.1:8000/api/student/${studentId}`)
+    .subscribe((students: any)=>{
+      this.students = students;
+    })
+    console.log('dasdasd')
+    console.log(this.students)
   }
 }

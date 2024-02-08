@@ -1,0 +1,12 @@
+<div class="container-wrap">
+    <div class="details-container">
+        <span class="details-header">Fullname: </span><p>{{ student.fullname }}</p>
+        <span class="details-header">Gender</span><p>{{ student.gender == 'M' ? 'Male' : 'Female' }}</p>
+        <span class="details-header">Email</span><p>{{ student.email }}</p>
+        <span class="details-header">Status</span><p>{{ student.is_active === 1 ? 'Active' : 'Not Active' }}</p>
+        <span class="details-header">Created At</span><p>{{ student.formattedCreatedDateTime }}</p>
+        <span class="details-header">Updated At</span><p>{{ student.formattedUpdatedDateTime }}</p>
+        <span class="details-header">Deleted At</span><p>{{ student.deleted_at ? student.deleted_at : '-' }}</p>
+    </div>
+    <button type="button" class="btn btn-outline-info" routerLink="">Go Back</button>
+</div>
